@@ -19,20 +19,20 @@ public:
      * @param n the number of vertices
      */ 
     DisjointSet(std::size_t n):
-        parent(n),
-        rank(n, 0),
-        size(n, 1)
+        _parent(n),
+        _rank(n, 0),
+        _size(n, 1)
     {
-        std::iota(parent.begin(), parent.end(), 0);
+        std::iota(_parent.begin(), _parent.end(), 0);
     }
 
     /**
      * Find the root of the disjoint set that v belongs
      * @param v a vertex number in [0, n)
      */
-    std::size_t find_set(std::size_t v)
+    std::size_t findSet(std::size_t v)
     {
-        return v != parent[v] ? parent[v] = find_set(parent[v]) : v;
+        return v != _parent[v] ? _parent[v] = findSet(_parent[v]) : v;
     }
 
     /**
@@ -42,15 +42,15 @@ public:
      */
     void unite(std::size_t u, std::size_t v)
     {
-        u = find_set(u);
-        v = find_set(v);
+        u = findSet(u);
+        v = findSet(v);
 
         if(u == v)  return;
-        else if(rank[u] > rank[v]) std::swap(u, v);
+        else if(_rank[u] > _rank[v]) std::swap(u, v);
 
-        parent[u] = v;
-        size[v] += size[u];
-        rank[v] += rank[u] == rank[v];
+        _parent[u] = v;
+        _size[v] += _size[u];
+        _rank[v] += _rank[u] == _rank[v];
     }
 
     /**
@@ -58,9 +58,9 @@ public:
      * @param u a vertex number in [0, n)
      * @param v a vertex number in [0, n)
      */ 
-    inline bool same(std::size_t u, std::size_t v)
+    inline bool is_same(std::size_t u, std::size_t v)
     {
-        return find_set(u) == find_set(v);
+        return findSet(u) == findSet(v);
     }
 
     /**
@@ -69,17 +69,17 @@ public:
      */
     inline unsigned getSize(std::size_t v)
     {
-        return size[find_set(v)];
+        return _size[findSet(v)];
     }
 
 private:
 
     /* the parent of each vertex */
-    std::vector<std::size_t> parent;
+    std::vector<std::size_t> _parent;
 
     /* the rank of each vertex */
-    std::vector<unsigned> rank;
+    std::vector<unsigned> _rank;
 
     /* the size of each disjoint set */
-    std::vector<unsigned> size;
+    std::vector<unsigned> _size;
 };
