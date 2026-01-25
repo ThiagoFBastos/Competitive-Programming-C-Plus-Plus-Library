@@ -11,9 +11,10 @@
 #include <cassert>
 #include <concepts>
 #include <iterator>
-#include <functional>
+#include <type_traits>
 
-template <typename T>
+template <typename T, typename F>
+requires std::regular_invocable<F, T, T> && std::same_as<std::invoke_result_t<F, T, T>, T>
 class SparseTable
 {
 public:
@@ -23,11 +24,10 @@ public:
      * @param end the end iterator of the sequence
      * @param op the binary function that calculates the answer
      */
-    template <typename It, typename F>
-	requires std::regular_invocable<F, T, T>
-	&& std::same_as<std::invoke_result_t<F, T, T>, T>
-	&& std::same_as<typename std::iterator_traits<It>::value_type, T>
-    SparseTable(It begin, It end, F&& op)
+    template <typename It>
+	requires std::same_as<typename std::iterator_traits<It>::value_type, T>
+    SparseTable(It begin, It end, F&& op):
+        _op(op)
     {
         std::size_t n = std::distance(begin, end);
 
@@ -44,47 +44,21 @@ public:
 
         for(std::size_t i = 1; i < lg; ++i)
             for(std::size_t j = 0; j + (1 << i) <= n; ++j)
-                _st[i][j] = op(_st[i - 1][j], _st[i - 1][j + (1 << (i - 1))]);
-
-		_query_constant = [this, op](std::size_t l, std::size_t r)
-		{
-			assert(l <= r && r < _st[0].size());
-
-			std::size_t lg = 31 - __builtin_clz(r - l + 1);
-
-			return op(_st[lg][l], _st[lg][r + 1 - (1 << lg)]);
-		};
-
-		_query_log = [this, op](T initial, std::size_t l, std::size_t r)
-		{
-			assert(l <= r && r < _st[0].size());
-
-			auto distance = r - l + 1;
-			std::size_t lg = 31 - __builtin_clz(distance);
-
-			T answer = initial;
-
-			for(std::size_t i = 0; i <= lg; ++i)
-			{
-				if(distance & (1 << i))
-				{
-					answer = op(answer, _st[i][l]);
-					l += (1 << i);
-				}
-			}
-
-			return answer;
-		};
+                _st[i][j] = _op(_st[i - 1][j], _st[i - 1][j + (1 << (i - 1))]);
     }
 
     /**
-     * @brief answer the value of constant query operation
+     * @brief answer the value of constant query idempotent operation
      * @param l the leftmost index of interval
      * @param r the rightmost index of interval
      */
     T query(std::size_t l, std::size_t r) const
     {
-        return _query_constant(l, r);
+        assert(l <= r && r < _st[0].size());
+
+        std::size_t lg = 31 - __builtin_clz(r - l + 1);
+
+        return _op(_st[lg][l], _st[lg][r + 1 - (1 << lg)]);
     }
 
     /**
@@ -95,16 +69,42 @@ public:
      */
     T query(T initial, std::size_t l, std::size_t r) const
     {
-        return _query_log(initial, l, r);
+       assert(l <= r && r < _st[0].size());
+
+        auto distance = r - l + 1;
+        std::size_t lg = 31 - __builtin_clz(distance);
+
+        T answer = initial;
+
+        for(std::size_t i = 0; i <= lg; ++i)
+        {
+            if(distance & (1 << i))
+            {
+                answer = _op(answer, _st[i][l]);
+                l += (1 << i);
+            }
+        }
+
+        return answer;
     }
 
 private:
     /* the sparse table data */
     std::vector<std::vector<T>> _st;
 
-    /* the constant query function */ 
-    std::function<T(std::size_t, std::size_t)> _query_constant;
-
-    /* the log query function */
-	std::function<T(T, std::size_t, std::size_t)> _query_log;
+    /* binary operator that handles with the calculation of result*/
+    F _op;
 };
+
+/**
+ * @brief Factory function of the sparse table data structure
+ * @param begin the start iterator of the sequence
+ * @param end the end iterator of the sequence
+ * @param op the binary function that calculates the answer
+ */
+template<typename It, typename F>
+auto make_sparse_table(It begin, It end, F&& op)
+{
+    using T = typename std::iterator_traits<It>::value_type;
+    return SparseTable<T, std::decay_t<F>>(begin, end, std::forward<F>(op));
+}
