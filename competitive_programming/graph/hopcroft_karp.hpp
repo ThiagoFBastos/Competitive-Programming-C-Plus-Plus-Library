@@ -65,7 +65,7 @@ public:
 private:
     /**
      * @brief Run the bfs from the vertices of the left side
-     * @return wheather the graph has a augmenting path
+     * @return whether the graph has an augmenting path
      */
     bool bfs() 
     {
@@ -108,7 +108,7 @@ private:
     /**
      * @brief Find the matching edges
      * @param u the source vertex
-     * @return wheather from the source vertex exists a augmenting path
+     * @return whether from the source vertex exists an augmenting path
      */
     bool dfs(int u) 
     {

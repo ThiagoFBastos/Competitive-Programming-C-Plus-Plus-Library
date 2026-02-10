@@ -39,7 +39,7 @@ namespace factorization
 	}
  
     /**
-     * @brief Miller-Rabin algorithm to check wheather a number is prime
+     * @brief Miller-Rabin algorithm to check whether a number is prime
      * @param n the target number
      * @return true if the number is prime, and false otherwise
      */
