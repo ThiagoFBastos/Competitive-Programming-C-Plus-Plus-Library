@@ -9,7 +9,7 @@
 namespace factorization
 { 
     /**
-     * @brief take the modulo of the mutiplication of two numbers
+     * @brief Take the modulo of the mutiplication of two numbers
      * @param a a number
      * @param b a number
      * @param m the modulo
@@ -21,7 +21,7 @@ namespace factorization
 	}
  
     /**
-     * @brief modular binary exponetiation
+     * @brief Modular binary exponentiation
      * @param a the base number
      * @param p the power
      * @param m the modulo
@@ -39,7 +39,7 @@ namespace factorization
 	}
  
     /**
-     * Miller-Rabin algorithm to check wheather a number is prime
+     * @brief Miller-Rabin algorithm to check wheather a number is prime
      * @param n the target number
      * @return true if the number is prime, and false otherwise
      */
@@ -81,7 +81,7 @@ namespace factorization
 	}
  
     /**
-     * auxiliar function used in the rho method
+     * @brief Auxiliary function used by the rho method
      * @param x the number to square up
      * @param c the linear coefficient
      * @param mod the number to take the modulo of the function
@@ -94,7 +94,7 @@ namespace factorization
 	}
  
     /**
-     * Pollard-Rho algorithm to find a factor of n
+     * @brief Pollard-Rho algorithm to find a factor of n
      * @param n the target number
      * @return a factor of n != 1, n (cannot be called for prime numbers)
      */
@@ -122,7 +122,7 @@ namespace factorization
 	}
 	
     /**
-     * Factorize a number using the pollard-rho algorithm and a brute force of
+     * @brief Factor a number using the pollard-rho algorithm and a brute force of
      * prime numbers until n^(1 / 4)
      * @param n the target number
      * @return a vector of factors as (p, k), ie, p^k
