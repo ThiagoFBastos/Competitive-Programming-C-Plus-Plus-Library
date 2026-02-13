@@ -105,7 +105,7 @@ public:
 	}
 
     /**
-     * @return Return the number of nodes
+     * @return the number of nodes
      */
 	std::size_t size() const noexcept
 	{
