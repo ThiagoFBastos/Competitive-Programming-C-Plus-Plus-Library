@@ -7,73 +7,73 @@ constexpr double EPS = 1e-9;
 struct point {
 	double x, y;
 
-	point() {x = y = 0;}
+	point() : x(), y() {}
 	point(double _x, double _y) : x {_x}, y {_y} {}
 
-	double norm() {
+	double norm() const {
 		return std::hypot(x, y);
 	}
 
-	point normalized() {
+	point normalized() const {
 		return point(x, y) * (1.0 / norm());
 	}
 
-	double angle() {
+	double angle() const {
 		return std::atan2(y, x);
 	}
 
-	double polarAngle() {
+	double polarAngle() const {
 		double a = std::atan2(y, x);
 		return a < 0 ? a + 2 * std::acos(-1) : a;
 	}
 
-	bool operator<(point other) const {
+	bool operator<(const point& other) const {
 		if(std::fabs(x - other.x) > EPS)
 			return x < other.x;
 		return y < other.y;		
 	}
 
-	bool operator>(point other) const {
+	bool operator>(const point& other) const {
 		if(std::fabs(x - other.x) > EPS)
 			return x > other.x;
 		return y > other.y;		
 	}
 
-	bool operator<=(point other) const {
+	bool operator<=(const point& other) const {
 		if(std::fabs(x - other.x) > EPS)
 			return x < other.x;
 		return y <= other.y;		
 	}
 	
-	bool operator>=(point other) const {
+	bool operator>=(const point& other) const {
 		if(std::fabs(x - other.x) > EPS)
 			return x < other.x;
 		return y >= other.y;		
 	}
 	
-	bool operator==(point other) const {
+	bool operator==(const point& other) const {
 		return std::fabs(x - other.x) < EPS && std::fabs(y - other.y) < EPS;
 	}
 
-	bool operator!=(point other) const {
+	bool operator!=(const point& other) const {
 		return !(*this == other);
 	}
 
-	point operator+(point other) const {
+	point operator+(const point& other) const {
 		return {x + other.x, y + other.y};
 	}
 
-	point operator-(point other) const {
+	point operator-(const point& other) const {
 		return {x - other.x, y - other.y};
 	}
 
-	point& operator+=(point other) {
+	point& operator+=(const point& other) {
 		x += other.x;
 		y += other.y;
 		return *this;
 	}
 	
-	point& operator-=(point other) {
+	point& operator-=(const point& other) {
 		x -= other.x;
 		y -= other.y;
 		return *this;
@@ -90,69 +90,73 @@ struct point {
 	}
 };
 
-double dist(point p1, point p2) {
+namespace point_utils
+{
+inline double dist(const point& p1, const point& p2) {
 	return std::hypot(p1.x - p2.x, p1.y - p2.y);
 }
 
-double inner(point p1, point p2) {
+inline double inner(const point& p1, const point& p2) {
 	return p1.x * p2.x + p1.y * p2.y;
 }
 
-double cross(point p1, point p2) {
+inline double cross(const point& p1, const point& p2) {
 	return p1.x * p2.y - p1.y * p2.x;
 }
 
-bool ccw(point p, point q, point r) {
-	return cross(q - p, r - p) > 0;
+inline bool ccw(const point& p, const point& q, const point& r) {
+	return cross(q - p, r - p) > EPS;
 }
 
-bool cw(point p, point q, point r) {
-	return cross(q - p, r - p) < 0;
+inline bool cw(const point& p, const point& q, const point& r) {
+	return cross(q - p, r - p) < -EPS;
 }
 
-bool collinear(point p, point q, point r) {
+inline bool collinear(const point& p, const point& q, const point& r) {
 	return std::fabs(cross(p - q, r - p)) < EPS;
 }
 
-point rotate(point p, double rad) {
+inline point rotate(const point& p, double rad) {
 	return {p.x * std::cos(rad) - p.y * std::sin(rad), p.x * std::sin(rad) + p.y * std::cos(rad)};
 }
 
-double angle(point a, point o, point b) {
+inline double angle(const point& a, const point& o, const point& b) {
 	return std::acos(inner(a - o, b - o) / dist(o, a) * dist(o, b));
 }
 
-point proj(point u, point v) {
+inline point proj(const point& u, const point& v) {
 	return v * (inner(u, v) / inner(v, v));
 }
 
-bool between(point p, point q, point r) {
+inline bool between(const point& p, const point& q, const point& r) {
 	return collinear(p, q, r) && inner(p - q, r - q) <= 0;
 }
 
-point lineIntersectSeg(point p, point q, point A, point B) {
+inline point lineIntersectSeg(const point& p, const point& q, const point& A, const point& B) {
 	double c = cross(A - B, p - q);
 	double a = cross(A, B);
 	double b = cross(p, q);
 	return (p - q) * (a / c) - (A - B) * (b / c);
 }
 
-bool parallel(point a, point b) {
+inline bool parallel(const point& a, const point& b) {
 	return std::fabs(cross(a, b)) < EPS;
 }	
 
-bool segIntersects(point a, point b, point p, point q) {
+inline bool segIntersects(const point& a, const point& b, const point& p, const point& q) {
 	if(parallel(a - b, p - q))
 		return between(a, p, b) || between(a, q, b) || between(p, a, q) || between(p, b, q);
 
-	point i = lineIntersectSeg(a, b, p, q);
+	auto i = lineIntersectSeg(a, b, p, q);
 
 	return between(a, i, b) && between(p, i, q);
 }
 
-point closestToLineSegment(point p, point a, point b) {
+inline point closestToLineSegment(const point& p, const point& a, const point& b) {
 	double u = inner(p - a, b - a) / inner(b - a, b - a);
 	if(u < 0) return a;
 	if(u > 1) return b;
 	return a + (b - a) * u;
+}
+
 }
