@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 
+namespace strings {
+
 inline std::vector<int> kmp(const std::string& s) 
 {
 	int n = s.size();
@@ -16,3 +18,6 @@ inline std::vector<int> kmp(const std::string& s)
 	}
 	return p;
 }
+
+}
+
