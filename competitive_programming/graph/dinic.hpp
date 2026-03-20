@@ -4,7 +4,7 @@
 #include <queue>
 #include <algorithm>
 
-constexpr long long inf = 1e16L;
+namespace graph {
 
 struct FlowEdge {
     int v, u;
@@ -60,7 +60,9 @@ public:
     }
     
    long long flow() {
+        constexpr long long inf = 1e16L;
         long long f = 0;
+        
         while(bfs()) {
             fill(ptr.begin(), ptr.end(), 0);
             while(long long pushed = dfs(s, inf)) f += pushed;
@@ -75,3 +77,5 @@ private:
     std::vector<int> level, ptr;
     std::queue<int> q;
 };
+
+}
