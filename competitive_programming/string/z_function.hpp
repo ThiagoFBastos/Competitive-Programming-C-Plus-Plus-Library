@@ -4,6 +4,8 @@
 #include <string>
 #include <algorithm>
 
+namespace strings {
+
 inline std::vector<int> z_function(const std::string& s) {
     int n = (int)s.length();
     std::vector<int> z(n, 0);
@@ -13,4 +15,6 @@ inline std::vector<int> z_function(const std::string& s) {
         if(i + z[i] - 1 > r) l = i, r = i + z[i] - 1;
     }
     return z;
+}
+
 }
