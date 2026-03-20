@@ -1,5 +1,7 @@
 #pragma once
 
+namespace math {
+
 inline long long bin_exp(long long n, long long p, long long mod) 
 {
 	long long ans = 1;
@@ -9,4 +11,6 @@ inline long long bin_exp(long long n, long long p, long long mod)
 		n = n * n % mod;
 	}
 	return ans;
+}
+
 }
