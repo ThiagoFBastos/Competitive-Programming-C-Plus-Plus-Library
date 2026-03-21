@@ -2,9 +2,11 @@
 
 #include <cmath>
 
+namespace geometry {
+
 constexpr double EPS = 1e-9;
 
-struct point 
+struct point
 {
 	double x, y;
 
@@ -105,9 +107,24 @@ struct point
 	{
 		return {x * k, y * k};
 	}
-};
 
-namespace point_utils {
+	point& operator/=(double k)
+	{
+		x /= k;
+		y /= k;
+		return *this;
+	}
+
+	point operator/(double k) const
+	{
+		return {x / k, y / k};
+	}
+
+	point operator-() const
+	{
+		return {-x, -y};
+	}
+};
 
 inline double dist(const point& p1, const point& p2) 
 {
