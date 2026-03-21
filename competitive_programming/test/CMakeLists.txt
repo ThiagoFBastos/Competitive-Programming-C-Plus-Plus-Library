@@ -1,2 +1,6 @@
+add_subdirectory(data_structures)
 add_subdirectory(dp)
+add_subdirectory(geometry)
+add_subdirectory(graph)
 add_subdirectory(math)
+add_subdirectory(string)
