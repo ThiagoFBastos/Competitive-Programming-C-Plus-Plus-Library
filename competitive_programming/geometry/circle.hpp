@@ -10,6 +10,8 @@
 #include <chrono>
 #include <random>
 
+namespace geometry {
+
 struct circle 
 {
 	point c;
@@ -36,20 +38,20 @@ struct circle
 
 	bool intersects(const circle& other) const 
 	{
-		return point_utils::dist(c, other.c) < r + other.r;
+		return dist(c, other.c) < r + other.r;
 	}
 
 	bool contains(const point& p) const 
 	{
-		return point_utils::dist(c, p) <= r + EPS;
+		return dist(c, p) <= r + EPS;
 	}
 
 	std::pair<point, point> getTangentPoint(const point& p) const 
 	{
-		double d1 = point_utils::dist(p, c);
+		double d1 = dist(p, c);
 		double theta = std::asin(r / d1);
-		auto p1 = point_utils::rotate(c - p, -theta);
-		auto p2 = point_utils::rotate(c - p, theta);
+		auto p1 = rotate(c - p, -theta);
+		auto p2 = rotate(c - p, theta);
 		p1 = p1 * (std::sqrt(d1 * d1 - r * r) / d1) + p;
 		p2 = p2 * (std::sqrt(d1 * d1 - r * r) / d1) + p;	
 		return {p1, p2};
@@ -59,7 +61,7 @@ struct circle
 	{
 		std::vector<std::pair<point, point>> ans;
 		
-		double d = point_utils::dist(other.c, c);
+		double d = dist(other.c, c);
 
 		double dr = std::abs(r - other.r), sr = r + other.r;
 
@@ -70,8 +72,8 @@ struct circle
 		point dc1 = (other.c - c).normalized() * r;
 		point dc2 = (other.c - c).normalized() * other.r;
 
-		ans.push_back({c + point_utils::rotate(dc1, u), other.c + point_utils::rotate(dc2, u)});
-		ans.push_back({c + point_utils::rotate(dc1, -u), other.c + point_utils::rotate(dc2, -u)});
+		ans.push_back({c + rotate(dc1, u), other.c + rotate(dc2, u)});
+		ans.push_back({c + rotate(dc1, -u), other.c + rotate(dc2, -u)});
 
 		if(sr >= d) return ans;
 
@@ -79,8 +81,8 @@ struct circle
 
 		dc2 = (c - other.c).normalized() * other.r;
 
-		ans.push_back({c + point_utils::rotate(dc1, v), other.c + point_utils::rotate(dc2, v)});
-		ans.push_back({c + point_utils::rotate(dc1, -v), other.c + point_utils::rotate(dc2, -v)});
+		ans.push_back({c + rotate(dc1, v), other.c + rotate(dc2, v)});
+		ans.push_back({c + rotate(dc1, -v), other.c + rotate(dc2, -v)});
 
 		return ans;
 	}
@@ -89,17 +91,15 @@ struct circle
 	{
 		assert(intersects(other));
 		
-		double d = point_utils::dist(c, other.c);
+		double d = dist(c, other.c);
 
 		double u = std::acos((r * r + d * d - other.r * other.r) / (2 * r * d));
 
 		auto dc = (other.c - c).normalized() * r;
 
-		return {c + point_utils::rotate(dc, u), c + point_utils::rotate(dc, -u)};	
+		return {c + rotate(dc, u), c + rotate(dc, -u)};	
 	}
 };
-
-namespace circle_utils {
 	
 inline circle circumcircle(const point& a, const point& b, const point& c) 
 {
@@ -107,24 +107,24 @@ inline circle circumcircle(const point& a, const point& b, const point& c)
 	point v = {(c - a).y, -(c - a).x};
 	auto n = (c - b) * 0.5;
 	circle ans;
-	double t = point_utils::cross(u, n) / point_utils::cross(v, u);
+	double t = cross(u, n) / cross(v, u);
 	ans.c = (a + c) * 0.5 + v * t;
-	ans.r = point_utils::dist(ans.c, a);
+	ans.r = dist(ans.c, a);
 	return ans; 
 }
 
 inline int insideCircle(const point& p, const circle& c) 
 {
-	if(std::fabs(point_utils::dist(p, c.c) - c.r) < EPS) return 1;
-	else if(point_utils::dist(p, c.c) < c.r) return 0;
+	if(std::fabs(dist(p, c.c) - c.r) < EPS) return 1;
+	else if(dist(p, c.c) < c.r) return 0;
 	return 2; // 0 = inside /1 = border /2 = outside
 }	
 
 inline circle incircle(const point& p1, const point& p2, const point& p3) 
 {
-	double m1 = point_utils::dist(p2, p3);
-	double m2 = point_utils::dist(p1, p3);
-	double m3 = point_utils::dist(p1, p2);
+	double m1 = dist(p2, p3);
+	double m2 = dist(p1, p3);
+	double m3 = dist(p1, p2);
 	auto c = (p1 * m1 + p2 * m2 + p3 * m3) * (1.0 / (m1 + m2 + m3));
 	double s = 0.5 * (m1 + m2 + m3);
 	double r = sqrt(s * (s - m1) * (s - m2) * (s - m3)) / s;
@@ -143,7 +143,7 @@ inline circle minimumCircle(std::vector<point>& p)
 		C = circle(p[i], 0.0);
 		for(int j = 0; j < i; ++j) {
 			if(C.contains(p[j])) continue;
-			C = circle((p[j] + p[i]) * 0.5, 0.5 * point_utils::dist(p[j], p[i]));
+			C = circle((p[j] + p[i]) * 0.5, 0.5 * dist(p[j], p[i]));
 			for(int k = 0; k < j; ++k) {
 				if(C.contains(p[k])) continue;
 				C = circumcircle(p[j], p[i], p[k]);
