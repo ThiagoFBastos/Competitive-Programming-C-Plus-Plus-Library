@@ -3,6 +3,8 @@
 #include <vector>
 #include <queue>
 
+namespace graph {
+
 /**
  * @brief This class finds the maximum matching of a bipartite graph in O(V^0.5 * E)
  */
@@ -154,3 +156,5 @@ private:
     /* The number of nodes in the right side */
     int _n;
 };
+
+}
