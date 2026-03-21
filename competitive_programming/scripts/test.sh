@@ -8,4 +8,4 @@ echo "==> Compilando"
 cmake --build $BUILD_DIR
 
 echo "==> Rodando testes"
-./$BUILD_DIR/test
+ctest --test-dir $BUILD_DIR

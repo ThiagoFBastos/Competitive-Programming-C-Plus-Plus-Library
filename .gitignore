@@ -1,2 +1,3 @@
 competitive_programming/build/*
 competitive_programming/test/env/*
+.vscode/*

@@ -1,7 +1,10 @@
 cmake_minimum_required(VERSION 3.28)
-project(test)
+project(CompetitiveProgramming)
+
+set(PROJECT_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/src)
 
 find_package(GTest REQUIRED)
 
-add_executable(${PROJECT_NAME} main.cpp)
-target_link_libraries(${PROJECT_NAME} PRIVATE GTest::gtest GTest::gtest_main)
+enable_testing()
+
+add_subdirectory(test)
