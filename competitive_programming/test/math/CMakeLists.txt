@@ -8,7 +8,13 @@ add_executable(miller-rabin miller_rabin.cpp)
 target_include_directories(miller-rabin PRIVATE ${PROJECT_INCLUDE_DIR})
 target_link_libraries(miller-rabin PRIVATE GTest::gtest GTest::gtest_main)
 
+# Euclidian Extended
+add_executable(euclides-ext euclides_ext.cpp)
+target_include_directories(euclides-ext PRIVATE ${PROJECT_INCLUDE_DIR})
+target_link_libraries(euclides-ext PRIVATE GTest::gtest GTest::gtest_main)
+
 include(GoogleTest)
 
 gtest_discover_tests(bin-exp)
 gtest_discover_tests(miller-rabin)
+gtest_discover_tests(euclides-ext)
