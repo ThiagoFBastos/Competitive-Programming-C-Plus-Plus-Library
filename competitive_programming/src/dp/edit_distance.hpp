@@ -15,7 +15,7 @@ inline int edit_distance(const std::string& s, const std::string& t)
     std::size_t n = s.size(), m = t.size();
 	std::vector<std::vector<int>> dp(n + 2);
 
-	for(int k = 0; k <= n + 1; ++k)
+	for(std::size_t k = 0; k <= n + 1; ++k)
         dp[k].assign(m + 2, INF);
 
 	dp[0][0] = 0;
