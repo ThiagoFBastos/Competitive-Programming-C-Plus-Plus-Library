@@ -9,14 +9,11 @@ namespace dp {
 /**
  * @brief Calculate the edit distance between two strings
  */
-inline int edit_distance(const std::string& s, const std::string& t)
+inline unsigned edit_distance(const std::string& s, const std::string& t)
 {
-    constexpr int INF = 1e9;
+    constexpr unsigned INF = 1'000'000'000u;
     std::size_t n = s.size(), m = t.size();
-	std::vector<std::vector<int>> dp(n + 2);
-
-	for(std::size_t k = 0; k <= n + 1; ++k)
-        dp[k].assign(m + 2, INF);
+	std::vector<std::vector<unsigned>> dp(n + 2, std::vector<unsigned>(m + 2, INF));
 
 	dp[0][0] = 0;
 

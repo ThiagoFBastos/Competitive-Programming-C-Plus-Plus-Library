@@ -4,51 +4,55 @@
 
 TEST(EditDistance, SimpleTest) 
 {
-    std::string s = "LOVE";
-    std::string t = "MOVIE";
+    const std::string s = "LOVE";
+    const std::string t = "MOVIE";
+    const unsigned expected = 2u;
 
-    int edit = dp::edit_distance(s, t);
+    const auto edit = dp::edit_distance(s, t);
 
-    EXPECT_EQ(edit, 2);
+    EXPECT_EQ(edit, expected);
 }
 
 TEST(EditDistance, NoOperations) 
 {
-    std::string s = "A";
-    std::string t = "A";
+    const std::string s = "A";
+    const std::string t = "A";
+    const unsigned expected = 0u;
 
-    int edit = dp::edit_distance(s, t);
+    const auto edit = dp::edit_distance(s, t);
 
-    EXPECT_EQ(edit, 0);
+    EXPECT_EQ(edit, expected);
 }
 
 TEST(EditDistance, OneOperation)
 {
-    std::string s = "A";
-    std::string t = "B";
+    const std::string s = "A";
+    const std::string t = "B";
+    const unsigned expected = 1u;
 
-    int edit = dp::edit_distance(s, t);
+    const auto edit = dp::edit_distance(s, t);
 
-    EXPECT_EQ(edit, 1);
+    EXPECT_EQ(edit, expected);
 }
 
 TEST(EditDistance, ManyOperations)
 {
-    std::string s = "TWXFUABGBNLTBFNSUVQW";
-    std::string t = "GPNJILFXJUIZPLTVUIB";
+    const std::string s = "TWXFUABGBNLTBFNSUVQW";
+    const std::string t = "GPNJILFXJUIZPLTVUIB";
+    const unsigned expected = 19u;
+    
+    const auto edit = dp::edit_distance(s, t);
 
-    int edit = dp::edit_distance(s, t);
-
-    EXPECT_EQ(edit, 19);
+    EXPECT_EQ(edit, expected);
 }
 
 TEST(EditDistance, ManyReplacements)
 {
-    constexpr int length = 300;
-    std::string s(length, 'A');
-    std::string t(length, 'B');
+    constexpr unsigned length = 300;
+    const std::string s(length, 'A');
+    const std::string t(length, 'B');
 
-    int edit = dp::edit_distance(s, t);
+    const auto edit = dp::edit_distance(s, t);
 
     EXPECT_EQ(edit, length);
 }
