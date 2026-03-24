@@ -118,7 +118,7 @@ public:
 
     constexpr bool operator!=(const mint& rhs) const noexcept
     {
-        return !(val == rhs.val);
+        return !(*this == rhs);
     }
 
     template<int m2>
