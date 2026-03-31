@@ -30,7 +30,7 @@ public:
      * @param op the binary function that calculates the answer
      */
     template <typename It>
-	requires std::same_as<typename std::iterator_traits<It>::value_type, T>
+	requires std::convertible_to<typename std::iterator_traits<It>::value_type, T>
     SparseTable(It begin, It end, const F& op):
         _op(op)
     {
