@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <numeric>
 #include <utility>
+#include <limits>
 
 TEST(FenwickTree, SumTest)
 {

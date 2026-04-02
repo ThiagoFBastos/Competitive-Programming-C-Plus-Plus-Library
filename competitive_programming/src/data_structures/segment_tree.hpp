@@ -6,6 +6,9 @@
 #include <algorithm>
 #include <vector>
 
+namespace data_structures
+{
+
 /**
  * @brief Segtree traits concepts with method neutral that returns the neutral
  * element and merge that returns the result of merging the results of children node
@@ -120,3 +123,5 @@ private:
     /** The container of nodes */
 	std::vector<value_type> _container;
 };
+
+}
