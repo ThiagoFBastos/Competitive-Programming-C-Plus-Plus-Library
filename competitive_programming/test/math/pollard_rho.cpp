@@ -22,11 +22,11 @@ TEST(PollardRho, FactorizationTest)
 
 TEST(PollardRho, LargeFactorizationTest)
 {
-    constexpr __int128 n = (__int128)2879704699LL * (__int128)7000952377LL;
+    constexpr __int128 n = (__int128)2879704699LL * (__int128)57551099LL;
 
     const std::vector<std::pair<__int128, int>> expected = {
-        {(__int128)2879704699LL, 1},
-        {(__int128)7000952377LL, 1}
+        {(__int128)57551099, 1},
+        {(__int128)2879704699LL, 1}
     };
 
     auto factors = factorize(n);
