@@ -5,9 +5,43 @@
 #include <utility>
 #include <chrono>
 #include <numeric>
+#include <algorithm>
+#include <type_traits>
 
 namespace math::factorization
 {
+
+/**
+ * @brief Compute the greatest common divisor of two numbers
+ * @param a a number
+ * @param b a number
+ * @return the greatest common divisor of a and b
+ * @note This function is necessary because std::gcd does not support __int128
+ * numbers, which are used in the factorization process.
+ */
+__int128 gcd(__int128 a, __int128 b) 
+{
+	while (b != 0)
+	{
+		auto temp = b;
+		b = a % b;
+		a = temp;
+	}
+
+	return a;
+}
+
+/**
+ * @brief Compute the absolute value of a number
+ * @param x a number
+ * @return the absolute value of x
+ * @note This function is necessary because std::abs does not support __int128
+ * numbers, which are used in the factorization process.
+ */
+constexpr __int128 abs(__int128 x) 
+{
+	return x < 0 ? -x : x;
+}
 
 /**
  * @brief Take the modulo of the mutiplication of two numbers
@@ -115,7 +149,15 @@ inline T rho(T n)
 		{
 			x = f(x, c, n);
 			y = f(f(y, c, n), c, n);
-			g = gcd(abs(x - y), n);
+
+			if constexpr(std::is_same_v<decltype(n), __int128>)
+			{
+				g = gcd(abs(x - y), n);	
+			}
+			else
+			{
+				g = std::gcd(std::abs(x - y), n);
+			}
 		}
 	}
 
