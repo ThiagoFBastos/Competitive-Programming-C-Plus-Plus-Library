@@ -12,8 +12,10 @@
 #include <utility>
 #include <type_traits>
 
+namespace data_structures
+{
 template <typename T, typename Op>
-requires std::regular_invocable<Op, T, T> && std::same_as<std::invoke_result_t<Op, T, T>, T>
+requires std::regular_invocable<Op, T, T> && std::convertible_to<std::invoke_result_t<Op&, const T&, const T&>, T>
 class FenwickTree
 {
 public:
@@ -23,7 +25,7 @@ public:
      * @param op the binary operator that calculates the result
      * @param initial the default value that will be used when there is not value
      */
-    FenwickTree(std::size_t n, Op&& op, T initial):
+    FenwickTree(std::size_t n, const Op& op, T initial):
         _ft(n + 1, initial),
         _op(op),
         _initial(initial)
@@ -81,4 +83,6 @@ template<typename T, typename Op>
 auto make_fenwick_tree(std::size_t n, Op&& op, T initial)
 {
     return FenwickTree<T, std::decay_t<Op>>(n, std::forward<Op>(op), initial);
+}
+
 }

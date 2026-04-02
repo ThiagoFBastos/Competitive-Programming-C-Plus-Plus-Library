@@ -10,6 +10,9 @@
 #include <numeric>
 #include <utility>
 
+namespace data_structures
+{
+
 class DisjointSet
 {
 public:
@@ -83,3 +86,5 @@ private:
     /* the size of each disjoint set */
     std::vector<unsigned> _size;
 };
+
+}

@@ -13,8 +13,13 @@
 #include <iterator>
 #include <type_traits>
 
+namespace data_structures
+{
+
 template <typename T, typename F>
-requires std::regular_invocable<F, T, T> && std::same_as<std::invoke_result_t<F, T, T>, T>
+requires std::regular_invocable<F&, const T&, const T&> 
+&& std::convertible_to<std::invoke_result_t<F&, const T&, const T&>, T>
+&& std::copy_constructible<T>
 class SparseTable
 {
 public:
@@ -25,8 +30,8 @@ public:
      * @param op the binary function that calculates the answer
      */
     template <typename It>
-	requires std::same_as<typename std::iterator_traits<It>::value_type, T>
-    SparseTable(It begin, It end, F&& op):
+	requires std::convertible_to<typename std::iterator_traits<It>::value_type, T>
+    SparseTable(It begin, It end, const F& op):
         _op(op)
     {
         std::size_t n = std::distance(begin, end);
@@ -103,8 +108,10 @@ private:
  * @param op the binary function that calculates the answer
  */
 template<typename It, typename F>
-auto make_sparse_table(It begin, It end, F&& op)
+inline auto make_sparse_table(It begin, It end, F&& op)
 {
     using T = typename std::iterator_traits<It>::value_type;
     return SparseTable<T, std::decay_t<F>>(begin, end, std::forward<F>(op));
+}
+
 }

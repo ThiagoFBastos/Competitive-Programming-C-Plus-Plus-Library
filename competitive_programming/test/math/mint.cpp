@@ -168,3 +168,14 @@ TEST(Mint, NegativeTest)
 
     EXPECT_EQ(result, expected);
 }
+
+TEST(Mint, InverseTest)
+{
+    constexpr int MOD = 1e9 + 9;
+    const mint<MOD> num = 2;
+    const mint<MOD> expected = 1;
+
+    const auto inverse = num.inv();
+
+    EXPECT_EQ(inverse * num, expected);
+}
