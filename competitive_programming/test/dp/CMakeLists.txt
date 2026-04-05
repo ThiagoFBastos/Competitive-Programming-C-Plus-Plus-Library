@@ -18,9 +18,16 @@ add_executable(dp-number-of-subsequences number_of_subsequences.cpp)
 target_include_directories(dp-number-of-subsequences PRIVATE ${PROJECT_INCLUDE_DIR})
 target_link_libraries(dp-number-of-subsequences PRIVATE GTest::gtest GTest::gtest_main)
 
+# Removing Digits
+add_executable(dp-removing-digits removing_digits.cpp)
+target_include_directories(dp-removing-digits PRIVATE ${PROJECT_INCLUDE_DIR})
+target_link_libraries(dp-removing-digits PRIVATE GTest::gtest GTest::gtest_main)
+
+
 include(GoogleTest)
 
 gtest_discover_tests(dp-edit-distance)
 gtest_discover_tests(dp-lcs)
 gtest_discover_tests(dp-rectangle-cutting)
 gtest_discover_tests(dp-number-of-subsequences)
+gtest_discover_tests(dp-removing-digits)
