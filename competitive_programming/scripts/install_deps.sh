@@ -10,18 +10,14 @@ SRC=$DIR/..
 
 cd $SRC
 
-
 echo "==> Criando o ambiente virtual"
 python3 -m venv env
-
 
 echo "==> Ativando o ambiente virtual"
 source ./env/bin/activate
 
-
 echo "==> Instalando o Conan"
 pip install conan
-
 
 echo "==> Criando o Conan profile"
 conan profile detect --force
