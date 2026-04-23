@@ -2,7 +2,10 @@
 
 set -e
 
-BUILD_DIR=build
+DIR="$(cd "$(dirname "$0")" && pwd)"
+
+BUILD_DIR=$DIR/../build
+
 
 if [ -d $BUILD_DIR ]; then
     echo "==> Compilando"
