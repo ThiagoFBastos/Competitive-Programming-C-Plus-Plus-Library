@@ -3,6 +3,8 @@
 #include <set>
 #include <functional>
 
+/// FIXME
+/// This data structure only handles queries of type (x, 1), which is incomplete
 struct line 
 {
 	long long m, b;

@@ -4,7 +4,7 @@
 
 namespace geometry {
 
-constexpr double EPS = 1e-9;
+inline constexpr double EPS = 1e-9;
 
 struct point
 {

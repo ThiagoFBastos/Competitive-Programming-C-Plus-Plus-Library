@@ -138,14 +138,24 @@ inline circle minimumCircle(std::vector<point>& p)
 	std::shuffle(p.begin(), p.end(), rng);
 	int n = p.size();
 	circle C(p[0], 0.0);
-	for(int i = 0; i < n; ++i) {
-		if(C.contains(p[i])) continue;
+	
+	for(int i = 0; i < n; ++i) 
+	{
+		if(C.contains(p[i])) 
+			continue;
+
 		C = circle(p[i], 0.0);
-		for(int j = 0; j < i; ++j) {
-			if(C.contains(p[j])) continue;
+		for(int j = 0; j < i; ++j) 
+		{
+			if(C.contains(p[j])) 
+				continue;
+
 			C = circle((p[j] + p[i]) * 0.5, 0.5 * dist(p[j], p[i]));
-			for(int k = 0; k < j; ++k) {
-				if(C.contains(p[k])) continue;
+			for(int k = 0; k < j; ++k) 
+			{
+				if(C.contains(p[k])) 
+					continue;
+
 				C = circumcircle(p[j], p[i], p[k]);
 			}
 		}
