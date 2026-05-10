@@ -7,7 +7,7 @@
 
 using namespace math;
 
-TEST(Siveve, PrimesTest)
+TEST(Sieve, PrimesTest)
 {
     constexpr int N = 1000;
 
