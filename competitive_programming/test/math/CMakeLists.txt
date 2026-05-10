@@ -28,6 +28,11 @@ add_executable(fft fft.cpp)
 target_include_directories(fft PRIVATE ${PROJECT_INCLUDE_DIR})
 target_link_libraries(fft PRIVATE GTest::gtest GTest::gtest_main)
 
+# Totient
+add_executable(totient totient.cpp)
+target_include_directories(totient PRIVATE ${PROJECT_INCLUDE_DIR})
+target_link_libraries(totient PRIVATE GTest::gtest GTest::gtest_main)
+
 include(GoogleTest)
 
 gtest_discover_tests(bin-exp)
@@ -36,3 +41,4 @@ gtest_discover_tests(euclides-ext)
 gtest_discover_tests(mint)
 gtest_discover_tests(pollard-rho)
 gtest_discover_tests(fft)
+gtest_discover_tests(totient)
