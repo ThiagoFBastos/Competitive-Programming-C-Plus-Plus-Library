@@ -33,6 +33,11 @@ add_executable(totient totient.cpp)
 target_include_directories(totient PRIVATE ${PROJECT_INCLUDE_DIR})
 target_link_libraries(totient PRIVATE GTest::gtest GTest::gtest_main)
 
+# Sieve
+add_executable(sieve sieve.cpp)
+target_include_directories(sieve PRIVATE ${PROJECT_INCLUDE_DIR})
+target_link_libraries(sieve PRIVATE GTest::gtest GTest::gtest_main)
+
 include(GoogleTest)
 
 gtest_discover_tests(bin-exp)
@@ -42,3 +47,4 @@ gtest_discover_tests(mint)
 gtest_discover_tests(pollard-rho)
 gtest_discover_tests(fft)
 gtest_discover_tests(totient)
+gtest_discover_tests(sieve)
