@@ -8,7 +8,13 @@ add_executable(ahu ahu.cpp)
 target_include_directories(ahu PRIVATE ${PROJECT_INCLUDE_DIR})
 target_link_libraries(ahu PRIVATE GTest::gtest GTest::gtest_main)
 
+# Dijkstra
+add_executable(dijkstra dijkstra.cpp)
+target_include_directories(dijkstra PRIVATE ${PROJECT_INCLUDE_DIR})
+target_link_libraries(dijkstra PRIVATE GTest::gtest GTest::gtest_main)
+
 include(GoogleTest)
 
 gtest_discover_tests(tree-center)
 gtest_discover_tests(ahu)
+gtest_discover_tests(dijkstra)
