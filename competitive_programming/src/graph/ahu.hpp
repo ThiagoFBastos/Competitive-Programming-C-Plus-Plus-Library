@@ -17,6 +17,43 @@ class Ahu
 public:
     Ahu() = default;
 
+    /**
+     * @brief Find the pattern of a given rooted tree
+     * @param g The adjacency list
+     * @param root The root of the tree
+     */
+    int get_rooted_tree_pattern(const adjacency_list& g, int root)
+    {
+        assert(!g.empty());
+        return dfs(g, root, std::nullopt);
+    }
+
+    /**
+     * @brief Find a unique pattern of a given tree
+     * @param g The adjacency list of the tree
+     */
+
+    int get_tree_cannonical_pattern(const adjacency_list& g)
+    {
+        int cannonical {};
+
+        if(g.empty())
+            return {};
+
+        for(const auto v : center(g))
+            cannonical = std::max(cannonical, get_rooted_tree_pattern(g, v));
+
+        return cannonical;
+    }
+
+private:
+
+    /**
+     * @brief Do a DFS from the root to the others nodes
+     * @param g The adjacency list of the tree
+     * @param u The node of current subtree
+     * @param p The parent of the node u
+     */
     int dfs(const adjacency_list& g, int u, std::optional<int> p)
     {
         std::vector<int> patterns;
@@ -35,26 +72,7 @@ public:
         return vec2Id[patterns] = vec2Id.size();
     }
 
-    int get_rooted_tree_patter(const adjacency_list& g, int root)
-    {
-        assert(!g.empty());
-        return dfs(g, root, std::nullopt);
-    }
-
-    int get_tree_cannonical_pattern(const adjacency_list& g)
-    {
-        int cannonical {};
-
-        if(g.empty())
-            return {};
-
-        for(const auto v : center(g))
-            cannonical = std::max(cannonical, dfs(g, v, std::nullopt));
-
-        return cannonical;
-    }
-
-public:
+    /* The map between the array of patterns and the pattern of a subtree */
     std::map<std::vector<int>, int> vec2Id;
 };
 
