@@ -38,6 +38,11 @@ add_executable(sieve sieve.cpp)
 target_include_directories(sieve PRIVATE ${PROJECT_INCLUDE_DIR})
 target_link_libraries(sieve PRIVATE GTest::gtest GTest::gtest_main)
 
+# Stair Case
+add_executable(staircase staircase.cpp)
+target_include_directories(staircase PRIVATE ${PROJECT_INCLUDE_DIR})
+target_link_libraries(staircase PRIVATE GTest::gtest GTest::gtest_main)
+
 include(GoogleTest)
 
 gtest_discover_tests(bin-exp)
@@ -48,3 +53,4 @@ gtest_discover_tests(pollard-rho)
 gtest_discover_tests(fft)
 gtest_discover_tests(totient)
 gtest_discover_tests(sieve)
+gtest_discover_tests(staircase)
