@@ -32,7 +32,7 @@ inline int totient(int n)
             result *= k;
         } while (n % k == 0);
 
-        result = result * (k - 1) / k;
+        result = result / k * (k - 1);
     }
 
     if(n > 1)
@@ -40,5 +40,4 @@ inline int totient(int n)
 
     return result;
 }
-
 }
