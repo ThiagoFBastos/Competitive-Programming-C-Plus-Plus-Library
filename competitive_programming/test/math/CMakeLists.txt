@@ -48,6 +48,11 @@ add_executable(nim nim.cpp)
 target_include_directories(nim PRIVATE ${PROJECT_INCLUDE_DIR})
 target_link_libraries(nim PRIVATE GTest::gtest GTest::gtest_main)
 
+# Sum Floor
+add_executable(sum_floor sum_floor.cpp)
+target_include_directories(sum_floor PRIVATE ${PROJECT_INCLUDE_DIR})
+target_link_libraries(sum_floor PRIVATE GTest::gtest GTest::gtest_main)
+
 include(GoogleTest)
 
 gtest_discover_tests(bin-exp)
@@ -60,3 +65,4 @@ gtest_discover_tests(totient)
 gtest_discover_tests(sieve)
 gtest_discover_tests(staircase)
 gtest_discover_tests(nim)
+gtest_discover_tests(sum_floor)
