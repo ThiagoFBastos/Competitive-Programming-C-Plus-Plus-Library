@@ -6,6 +6,9 @@
 
 namespace strings {
 
+/**
+ * @brief Manacher Algorithm to find the longest palindrome length
+ */
 inline int manacher(const std::string& s)
 {
     const auto n = static_cast<int>(s.size());
