@@ -4,7 +4,7 @@
 #include <string>
 #include <algorithm>
 
-namespace strings {
+namespace string {
 
 /**
  * @brief Z Function algorithm

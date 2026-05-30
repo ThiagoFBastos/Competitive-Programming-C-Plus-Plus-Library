@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 
-namespace strings {
+namespace string {
 
 /**
  * @brief KMP algorithm

@@ -4,7 +4,7 @@
 #include <vector>
 #include <algorithm>
 
-namespace strings {
+namespace string {
 
 /**
  * @brief Manacher Algorithm to find the longest palindrome length
