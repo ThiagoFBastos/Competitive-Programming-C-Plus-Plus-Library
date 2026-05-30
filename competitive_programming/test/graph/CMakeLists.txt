@@ -18,9 +18,15 @@ add_executable(centroid centroid.cpp)
 target_include_directories(centroid PRIVATE ${PROJECT_INCLUDE_DIR})
 target_link_libraries(centroid PRIVATE GTest::gtest GTest::gtest_main)
 
+# Erdos Gallai
+add_executable(erdos-gallai erdos_gallai.cpp)
+target_include_directories(erdos-gallai PRIVATE ${PROJECT_INCLUDE_DIR})
+target_link_libraries(erdos-gallai PRIVATE GTest::gtest GTest::gtest_main)
+
 include(GoogleTest)
 
 gtest_discover_tests(tree-center)
 gtest_discover_tests(ahu)
 gtest_discover_tests(dijkstra)
 gtest_discover_tests(centroid)
+gtest_discover_tests(erdos-gallai)
