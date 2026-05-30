@@ -10,7 +10,7 @@ namespace dp {
  */
 inline int number_of_subsequences(const std::vector<int>& sequence, int MOD)
 {
-	std::size_t n = sequence.size();
+	const auto n = sequence.size();
 	long long dp {};
 
 	std::unordered_map<int, int> DP;

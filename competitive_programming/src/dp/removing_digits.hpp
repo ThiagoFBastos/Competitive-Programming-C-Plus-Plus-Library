@@ -10,7 +10,7 @@ namespace dp
  * Given an integer n, return the minimum number of steps to reduce it to zero.
  * In one step, you can remove any digit from n and subtract it from n.
  */
-inline int removing_digits(int n)
+inline int removing_digits(const int n)
 {
    std::vector<int> dp(n + 1);
  

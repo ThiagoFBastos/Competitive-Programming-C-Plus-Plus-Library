@@ -11,7 +11,7 @@ namespace dp {
  * in such a way that all side lengths remain integers.
  *  What is the minimum possible number of moves?
  */
-inline unsigned rectangle_cutting(unsigned w, unsigned h) 
+inline unsigned rectangle_cutting(const unsigned w, const unsigned h) 
 {
     constexpr unsigned INF = 1'000'000'000u;
     std::vector<std::vector<unsigned>> dp(w + 1, std::vector<unsigned>(h + 1, INF));
