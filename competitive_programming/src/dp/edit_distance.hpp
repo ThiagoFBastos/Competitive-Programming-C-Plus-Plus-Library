@@ -12,7 +12,9 @@ namespace dp {
 inline unsigned edit_distance(const std::string& s, const std::string& t)
 {
     constexpr unsigned INF = 1'000'000'000u;
-    std::size_t n = s.size(), m = t.size();
+    const auto n = s.size();
+	const auto m = t.size();
+	
 	std::vector<std::vector<unsigned>> dp(n + 2, std::vector<unsigned>(m + 2, INF));
 
 	dp[0][0] = 0;
