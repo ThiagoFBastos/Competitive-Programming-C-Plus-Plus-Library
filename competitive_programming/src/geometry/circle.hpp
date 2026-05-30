@@ -131,7 +131,7 @@ inline circle incircle(const point& p1, const point& p2, const point& p3)
 	return {c, r};
 }
 
-inline circle minimumCircle(std::vector<point>& p)
+inline circle minimumCircle(std::vector<point> p)
 {
     std::mt19937 rng(std::chrono::steady_clock::now().time_since_epoch().count());
 
