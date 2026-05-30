@@ -5,7 +5,7 @@
 #include <algorithm>
 
 /**
- * @brief header that compute the center and diameter of a tree
+ * @brief Find the center and diameter of a tree
  */
 
 namespace graph

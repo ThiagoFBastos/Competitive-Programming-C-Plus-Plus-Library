@@ -15,7 +15,9 @@ inline std::vector<T> longest_commom_subsequence(const std::vector<T>& first,
                                                  const std::vector<T>& second)
 {
     constexpr int INF = 1e9;
-    int n = static_cast<int>(first.size()), m = static_cast<int>(second.size());
+    const int n = static_cast<int>(first.size());
+	const int m = static_cast<int>(second.size());
+	
     std::vector<T> sequence;
     std::vector<std::vector<int>> dp(n + 2, std::vector<int>(m + 2, INF));
  

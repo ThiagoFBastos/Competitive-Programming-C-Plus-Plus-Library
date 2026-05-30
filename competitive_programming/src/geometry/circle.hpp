@@ -21,32 +21,32 @@ struct circle
 
 	circle(point _c, double _r) : c {_c}, r {_r} {}
 
-	double area() const 
+	double area() const
 	{
 		return std::acos(-1) * r * r;
 	}
 
-	double chord(double rad) const 
+	double chord(double rad) const
 	{
 		return 2 * r * std::sin(rad / 2);
 	}
 
-	double sector(double rad) const 
+	double sector(double rad) const
 	{
 		return 0.5 * rad * area() / std::acos(-1);
 	}
 
-	bool intersects(const circle& other) const 
+	bool intersects(const circle& other) const
 	{
 		return dist(c, other.c) < r + other.r;
 	}
 
-	bool contains(const point& p) const 
+	bool contains(const point& p) const
 	{
 		return dist(c, p) <= r + EPS;
 	}
 
-	std::pair<point, point> getTangentPoint(const point& p) const 
+	std::pair<point, point> getTangentPoint(const point& p) const
 	{
 		double d1 = dist(p, c);
 		double theta = std::asin(r / d1);
@@ -57,7 +57,7 @@ struct circle
 		return {p1, p2};
 	}
 
-	std::vector<std::pair<point, point>> getTangentSegs(const circle& other) const 
+	std::vector<std::pair<point, point>> getTangentSegs(const circle& other) const
 	{
 		std::vector<std::pair<point, point>> ans;
 		
@@ -101,7 +101,7 @@ struct circle
 	}
 };
 	
-inline circle circumcircle(const point& a, const point& b, const point& c) 
+inline circle circumcircle(const point& a, const point& b, const point& c)
 {
 	point u = {(b - a).y, -(b - a).x};
 	point v = {(c - a).y, -(c - a).x};
@@ -113,14 +113,14 @@ inline circle circumcircle(const point& a, const point& b, const point& c)
 	return ans; 
 }
 
-inline int insideCircle(const point& p, const circle& c) 
+inline int insideCircle(const point& p, const circle& c)
 {
 	if(std::fabs(dist(p, c.c) - c.r) < EPS) return 1;
 	else if(dist(p, c.c) < c.r) return 0;
 	return 2; // 0 = inside /1 = border /2 = outside
 }	
 
-inline circle incircle(const point& p1, const point& p2, const point& p3) 
+inline circle incircle(const point& p1, const point& p2, const point& p3)
 {
 	double m1 = dist(p2, p3);
 	double m2 = dist(p1, p3);
@@ -131,7 +131,7 @@ inline circle incircle(const point& p1, const point& p2, const point& p3)
 	return {c, r};
 }
 
-inline circle minimumCircle(std::vector<point>& p) 
+inline circle minimumCircle(std::vector<point> p)
 {
     std::mt19937 rng(std::chrono::steady_clock::now().time_since_epoch().count());
 

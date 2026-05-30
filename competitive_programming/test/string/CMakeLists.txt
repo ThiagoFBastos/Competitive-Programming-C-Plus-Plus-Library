@@ -8,7 +8,13 @@ add_executable(kmp kmp.cpp)
 target_include_directories(kmp PRIVATE ${PROJECT_INCLUDE_DIR})
 target_link_libraries(kmp PRIVATE GTest::gtest GTest::gtest_main)
 
+# Manacher
+add_executable(manacher manacher.cpp)
+target_include_directories(manacher PRIVATE ${PROJECT_INCLUDE_DIR})
+target_link_libraries(manacher PRIVATE GTest::gtest GTest::gtest_main)
+
 include(GoogleTest)
 
 gtest_discover_tests(z-function)
 gtest_discover_tests(kmp)
+gtest_discover_tests(manacher)
