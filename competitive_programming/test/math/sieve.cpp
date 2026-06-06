@@ -9,7 +9,7 @@ using namespace math;
 
 TEST(Sieve, PrimesTest)
 {
-    constexpr int N = 1000;
+    constexpr int N = 1303; // this number is prime
 
     auto primes = sieve(N);
 
