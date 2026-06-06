@@ -19,7 +19,7 @@ namespace math::factorization
  * @note This function is necessary because std::gcd does not support __int128
  * numbers, which are used in the factorization process.
  */
-__int128 gcd(__int128 a, __int128 b) 
+inline __int128 gcd(__int128 a, __int128 b)
 {
 	while (b != 0)
 	{
@@ -38,7 +38,7 @@ __int128 gcd(__int128 a, __int128 b)
  * @note This function is necessary because std::abs does not support __int128
  * numbers, which are used in the factorization process.
  */
-constexpr __int128 abs(__int128 x) 
+inline __int128 abs(__int128 x)
 {
 	return x < 0 ? -x : x;
 }
@@ -49,10 +49,17 @@ constexpr __int128 abs(__int128 x)
  * @param b a number
  * @param m the modulo
  */
-template<class T>
+template<typename T>
 inline T modMul(T a, T b, T m)
 {
-	return (T)((__int128)a * b % m);
+	if constexpr(std::is_same_v<T, long long> || std::is_same_v<T, __int128>)
+	{
+		return static_cast<T>(static_cast<__int128>(a) * b % m);
+	}
+	else
+	{
+		return static_cast<T>(static_cast<long long>(a) * b % m);
+	}
 }
  
 /**
@@ -61,7 +68,7 @@ inline T modMul(T a, T b, T m)
  * @param p the power
  * @param m the modulo
  */
-template<class T>
+template<typename T>
 inline T modMulExp(T a, T p, T m)
 {
 	T ans = 1;
@@ -78,7 +85,7 @@ inline T modMulExp(T a, T p, T m)
  * @param n the target number
  * @return true if the number is prime, and false otherwise
  */
-template<class T>
+template<typename T>
 inline bool miller(T n)
 {
 	const int pn = 9;
@@ -122,7 +129,7 @@ inline bool miller(T n)
  * @param mod the number to take the modulo of the function
  * @return (x^2 + c) % mod
  */
-template<class T>
+template<typename T>
 inline T f(T x, T c, T mod)
 {
 	return (modMul(x, x, mod) + c) % mod;
@@ -133,7 +140,7 @@ inline T f(T x, T c, T mod)
  * @param n the target number
  * @return a factor of n != 1, n (cannot be called for prime numbers)
  */
-template<class T>
+template<typename T>
 inline T rho(T n)
 {
 	std::mt19937 rnd(std::chrono::system_clock::now().time_since_epoch().count());
@@ -152,7 +159,7 @@ inline T rho(T n)
 
 			if constexpr(std::is_same_v<decltype(n), __int128>)
 			{
-				g = gcd(abs(x - y), n);	
+				g = gcd(abs(x - y), n);
 			}
 			else
 			{
@@ -170,7 +177,7 @@ inline T rho(T n)
  * @param n the target number
  * @return a vector of factors as (p, k), ie, p^k
  */
-template<class T>
+template<typename T>
 inline auto factorize(T n)
 {	
 	std::vector<std::pair<T, int>> f;

@@ -4,6 +4,19 @@
 
 using namespace math::factorization;
 
+TEST(PollardRho, SmallFactorizationTest)
+{
+    constexpr int n = 619 * 449 * 881;
+
+    const std::vector<std::pair<int, int>> expected {{449, 1}, {619, 1}, {881, 1}};
+
+    auto factors = factorize(n);
+
+    std::sort(factors.begin(), factors.end());
+
+    EXPECT_EQ(factors, expected);
+}
+
 TEST(PollardRho, FactorizationTest)
 {
     constexpr long long n = 4128133LL * 33013LL * 17LL * 17LL;
