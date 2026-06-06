@@ -3,6 +3,7 @@
 #include <vector>
 #include <queue>
 #include <algorithm>
+#include <ranges>
 
 /**
  * @brief Find the center and diameter of a tree
@@ -62,11 +63,11 @@ inline std::vector<int> center(const std::vector<std::vector<int>>& adj)
 
     std::vector<int> c;
 
-    for(size_t i = 0; i < adj.size(); ++i)
-    {
-        if(dist[i] == max_dist)
-            c.push_back(static_cast<int>(i));
-    }
+    auto filtered = std::views::iota(std::size_t {}, adj.size() + 1)
+                    | std::views::filter([&](auto v) { return dist[v] == max_dist; })
+                    | std::views::transform([](auto v) { return static_cast<int>(v); });
+
+    std::ranges::copy(filtered, std::back_inserter(c));
 
     return c;
 }
