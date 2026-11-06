@@ -23,23 +23,17 @@ TEST(SparseTable, RMQTest)
 
     std::vector<long long> vec;
 
-    vec.reserve(N);
+    std::ranges::copy(view, std::back_inserter(vec));
 
-    for(const auto& value : view)
-        vec.push_back(value);
-
-    auto op = [](const auto& lhs, const auto& rhs) {
-        return std::min(lhs, rhs);
-    };
-
-    const auto sp = data_structures::make_sparse_table(std::ranges::begin(vec), std::ranges::end(vec), op);
+    const auto sp = data_structures::make_sparse_table(std::ranges::begin(vec), std::ranges::end(vec), std::ranges::min);
 
     for(std::size_t l = 0; l < N; ++l)
     {
+        auto min = std::numeric_limits<long long>::max();
+
         for(std::size_t r = l; r < N; ++r)
         {
-            const auto min = std::reduce(vec.begin() + l, vec.begin() + r + 1, INF, op);
-
+            min = std::min(min, vec[r]);
             EXPECT_EQ(sp.query(l, r), min);
         }
     }
@@ -59,19 +53,17 @@ TEST(SparseTable, LogQueryTest)
 
     std::vector<int> vec;
 
-    vec.reserve(N);
-
-    for(const auto& value : view)
-        vec.push_back(value);
+    std::ranges::copy(view, std::back_inserter(vec));
 
     const auto sp = data_structures::make_sparse_table(std::ranges::begin(vec), std::ranges::end(vec), std::plus<int>());
 
     for(std::size_t l = 0; l < N; ++l)
     {
+        int sum {};
+
         for(std::size_t r = l; r < N; ++r)
         {
-            const auto sum = std::accumulate(vec.begin() + l, vec.begin() + r + 1, 0);
-
+            sum += vec[r];
             EXPECT_EQ(sp.query(0, l, r), sum);
         }
     }
