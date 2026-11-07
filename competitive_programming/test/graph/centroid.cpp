@@ -21,7 +21,7 @@ adjacenty_list build_tree(const std::vector<std::pair<int, int>>& edges)
 
 TEST(Centroid, CentroidTestSample1)
 {
-    std::vector<std::pair<int, int>> edges {
+    const std::vector<std::pair<int, int>> edges {
         {4, 1},
         {6, 5},
         {7, 2},
@@ -37,14 +37,14 @@ TEST(Centroid, CentroidTestSample1)
 
     graph::Centroid centroindFinder(adj);
 
-    int centroid = centroindFinder.findCentroid();
+    const int centroid = centroindFinder.findCentroid();
 
     EXPECT_TRUE(centroid == 8 || centroid == 9);
 }
 
 TEST(Centroid, CentroidTestSample2)
 {
-    std::vector<std::pair<int, int>> edges = {
+    const std::vector<std::pair<int, int>> edges = {
         {8, 5},
         {7, 4},
         {2, 6},
@@ -60,14 +60,14 @@ TEST(Centroid, CentroidTestSample2)
 
     graph::Centroid centroindFinder(adj);
 
-    int centroid = centroindFinder.findCentroid();
+    const int centroid = centroindFinder.findCentroid();
 
     EXPECT_TRUE(centroid == 5 || centroid == 7);
 }
 
 TEST(Centroid, CentroidTestSample3)
 {
-    std::vector<std::pair<int, int>> edges = {
+    const std::vector<std::pair<int, int>> edges = {
         {6, 4},
         {1, 3},
         {10, 8},
@@ -83,14 +83,14 @@ TEST(Centroid, CentroidTestSample3)
 
     graph::Centroid centroindFinder(adj);
 
-    int centroid = centroindFinder.findCentroid();
+    const int centroid = centroindFinder.findCentroid();
 
     EXPECT_TRUE(centroid == 4 || centroid == 8);
 }
 
 TEST(Centroid, CentroidTestSample4)
 {
-    std::vector<std::pair<int, int>> edges = {
+    const std::vector<std::pair<int, int>> edges = {
         {3, 6},
         {9, 1},
         {4, 5},
@@ -106,14 +106,14 @@ TEST(Centroid, CentroidTestSample4)
 
     graph::Centroid centroindFinder(adj);
 
-    int centroid = centroindFinder.findCentroid();
+    const int centroid = centroindFinder.findCentroid();
 
     EXPECT_TRUE(centroid == 0 || centroid == 3);
 }
 
 TEST(Centroid, CentroidTestSample5)
 {
-    std::vector<std::pair<int, int>> edges = {
+    const std::vector<std::pair<int, int>> edges = {
         {3, 1},
         {9, 8},
         {6, 5},
@@ -129,27 +129,27 @@ TEST(Centroid, CentroidTestSample5)
 
     graph::Centroid centroindFinder(adj);
 
-    int centroid = centroindFinder.findCentroid();
+    const int centroid = centroindFinder.findCentroid();
 
     EXPECT_TRUE(centroid == 2);
 }
 
 TEST(Centroid, CentroidTestSample6)
 {
-    std::vector<std::pair<int, int>> edges = {{1, 2}};
+    const std::vector<std::pair<int, int>> edges = {{1, 2}};
 
     auto adj = build_tree(edges);
 
     graph::Centroid centroindFinder(adj);
 
-    int centroid = centroindFinder.findCentroid();
+    const int centroid = centroindFinder.findCentroid();
 
     EXPECT_TRUE(centroid == 0 || centroid == 1);
 }
 
 TEST(Centroid, CentroidTestSample7)
 {
-    std::vector<std::pair<int, int>> edges = {
+    const std::vector<std::pair<int, int>> edges = {
         {1, 2},
         {2, 3},
         {3, 4},
@@ -160,14 +160,14 @@ TEST(Centroid, CentroidTestSample7)
 
     graph::Centroid centroindFinder(adj);
 
-    int centroid = centroindFinder.findCentroid();
+    const int centroid = centroindFinder.findCentroid();
 
     EXPECT_TRUE(centroid == 2);
 }
 
 TEST(Centroid, CentroidTestSample8)
 {
-    std::vector<std::pair<int, int>> edges = {
+    const std::vector<std::pair<int, int>> edges = {
         {1, 5},
         {5, 4},
         {4, 3},
@@ -178,14 +178,14 @@ TEST(Centroid, CentroidTestSample8)
 
     graph::Centroid centroindFinder(adj);
 
-    int centroid = centroindFinder.findCentroid();
+    const int centroid = centroindFinder.findCentroid();
 
     EXPECT_TRUE(centroid == 3);
 }
 
 TEST(Centroid, CentroidTestSample9)
 {
-    std::vector<std::pair<int, int>> edges = {
+    const std::vector<std::pair<int, int>> edges = {
         {1, 2},
         {2, 3},
         {1, 4},
@@ -200,7 +200,7 @@ TEST(Centroid, CentroidTestSample9)
 
     graph::Centroid centroindFinder(adj);
 
-    int centroid = centroindFinder.findCentroid();
+    const int centroid = centroindFinder.findCentroid();
 
     EXPECT_TRUE(centroid == 1);
 }
