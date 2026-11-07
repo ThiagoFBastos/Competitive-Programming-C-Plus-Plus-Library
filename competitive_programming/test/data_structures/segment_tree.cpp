@@ -50,10 +50,7 @@ TEST(SegmentTree, SumTest)
     std::vector<int> vec;
     std::mt19937 rng(std::chrono::steady_clock::now().time_since_epoch().count());
 
-    vec.reserve(N);
-
-    for(const auto& value : view)
-        vec.push_back(value);
+    std::ranges::copy(view, std::back_inserter(vec));
 
     std::shuffle(vec.begin(), vec.end(), rng);
 
@@ -63,7 +60,7 @@ TEST(SegmentTree, SumTest)
     {
         for(std::size_t j = 0; j <= i; ++j)
         {
-            auto sum = std::accumulate(vec.begin() + j, vec.begin() + i + 1, 0);
+            const auto sum = std::accumulate(vec.begin() + j, vec.begin() + i + 1, 0);
 
             EXPECT_EQ(st.query(j, i), sum);
         }
@@ -79,10 +76,7 @@ TEST(SegmentTree, MinTest)
     std::vector<int> vec;
     std::mt19937 rng(std::chrono::steady_clock::now().time_since_epoch().count());
 
-    vec.reserve(N);
-
-    for(const auto& value : view)
-        vec.push_back(value);
+    std::ranges::copy(view, std::back_inserter(vec));
 
     std::shuffle(vec.begin(), vec.end(), rng);
 
@@ -92,9 +86,7 @@ TEST(SegmentTree, MinTest)
     {
         for(std::size_t j = 0; j <= i; ++j)
         {
-            auto min = std::reduce(vec.begin() + j, vec.begin() + i + 1, std::numeric_limits<int>::max(), [](const auto& acc, const auto& value) {
-                return std::min(acc, value);
-            });
+            const auto min = std::reduce(vec.begin() + j, vec.begin() + i + 1, std::numeric_limits<int>::max(), std::ranges::min);
 
             EXPECT_EQ(st.query(j, i), min);
         }
