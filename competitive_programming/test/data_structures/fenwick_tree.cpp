@@ -5,6 +5,7 @@
 #include <numeric>
 #include <utility>
 #include <limits>
+#include <ranges>
 
 TEST(FenwickTree, SumTest)
 {
@@ -28,11 +29,7 @@ TEST(FenwickTree, MaxPrefixTest)
 {
     constexpr std::size_t N = 10;
 
-    const auto max = [](const auto& lhs, const auto& rhs) {
-        return std::max(lhs, rhs);
-    };
-
-    auto ft = data_structures::make_fenwick_tree<int>(N, max, std::numeric_limits<int>::min());
+    auto ft = data_structures::make_fenwick_tree<int>(N, std::ranges::max, std::numeric_limits<int>::min());
 
     for(std::size_t i = 1; i <= N; ++i)
         ft.update(i, i);
