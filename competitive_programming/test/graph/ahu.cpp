@@ -19,8 +19,8 @@ adjacency_list build_tree(const std::vector<int>& parents)
 
     for(std::size_t i = 0; i < parents.size(); ++i)
     {
-        int u = i + 1;
-        int v = parents[i] - 1;
+        const int u = i + 1;
+        const int v = parents[i] - 1;
 
         add_edge(g, u, v);
     }
@@ -34,8 +34,8 @@ TEST(Ahu, EmptyTreesTest)
 
     Ahu ahu;
 
-    auto pattern_adj_1 = ahu.get_tree_cannonical_pattern(adj1);
-    auto pattern_adj_2 = ahu.get_tree_cannonical_pattern(adj2);
+    const auto pattern_adj_1 = ahu.get_tree_cannonical_pattern(adj1);
+    const auto pattern_adj_2 = ahu.get_tree_cannonical_pattern(adj2);
 
     EXPECT_EQ(pattern_adj_1, 0);
     EXPECT_EQ(pattern_adj_1, pattern_adj_2);
@@ -57,8 +57,8 @@ TEST(Ahu, StarTreeTest)
             add_edge(adj2, 1, i);
     }
 
-    auto pattern_adj_1 = ahu.get_tree_cannonical_pattern(adj1);
-    auto pattern_adj_2 = ahu.get_tree_cannonical_pattern(adj2);
+    const auto pattern_adj_1 = ahu.get_tree_cannonical_pattern(adj1);
+    const auto pattern_adj_2 = ahu.get_tree_cannonical_pattern(adj2);
 
     EXPECT_EQ(pattern_adj_1, pattern_adj_2);
 }
@@ -76,8 +76,8 @@ TEST(Ahu, DifferentTreesTest)
         add_edge(adj2, i - 1, i);
     }
 
-    auto pattern_adj_1 = ahu.get_tree_cannonical_pattern(adj1);
-    auto pattern_adj_2 = ahu.get_tree_cannonical_pattern(adj2);
+    const auto pattern_adj_1 = ahu.get_tree_cannonical_pattern(adj1);
+    const auto pattern_adj_2 = ahu.get_tree_cannonical_pattern(adj2);
 
     EXPECT_NE(pattern_adj_1, pattern_adj_2);
 }
@@ -135,7 +135,7 @@ TEST(Ahu, CountUniqueTreesPatterns)
     for(const auto& parents : data)
     {
         auto g = build_tree(parents);
-        auto pattern = ahu.get_tree_cannonical_pattern(g);
+        const auto pattern = ahu.get_tree_cannonical_pattern(g);
         set.emplace(pattern);
     }
 
