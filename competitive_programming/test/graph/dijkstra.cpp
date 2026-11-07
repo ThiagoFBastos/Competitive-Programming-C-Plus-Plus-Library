@@ -29,7 +29,7 @@ TEST(Dijkstra, MultipleSimplePathTreeTest)
         add_edge(adj, i - 1, i, uid(gen));
     }
 
-    auto dist = dijkstra(adj, 0);
+    const auto dist = dijkstra(adj, 0);
     long long total_dist {};
 
     EXPECT_EQ(dist.size(), N);
@@ -49,7 +49,7 @@ TEST(Dijkstra, CompleteGraphTest)
     constexpr std::size_t source = 3;
 
     adjacency_list adj(N);
-     std::random_device rd;
+    std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<long long> uid(static_cast<int>(1e5), static_cast<int>(1e9));
 
@@ -64,7 +64,7 @@ TEST(Dijkstra, CompleteGraphTest)
         }
     }
 
-    auto dist = dijkstra(adj, source);
+    const auto dist = dijkstra(adj, source);
 
     EXPECT_EQ(dist.size(), N);
 
