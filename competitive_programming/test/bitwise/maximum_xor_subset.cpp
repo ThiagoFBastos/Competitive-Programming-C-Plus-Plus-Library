@@ -6,7 +6,7 @@
 
 #include "bitwise/maximum_xor_subset.hpp"
 
-using namespace bitset;
+using namespace bitwise;
 
 TEST(MaximumXorSubset, MaximumXorSubsetTest)
 {

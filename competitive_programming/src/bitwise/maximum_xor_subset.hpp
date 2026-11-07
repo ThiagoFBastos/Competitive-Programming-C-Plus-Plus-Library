@@ -3,7 +3,7 @@
 #include <vector>
 #include <algorithm>
 
-namespace bitset {
+namespace bitwise {
 
 using value_type = unsigned long long;
 
